@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FSM Traffic Light</title>
+	<style>
+		button {
+			background-color: black;
+			color: white;
+			padding: 20px;
+			font-size: 20px;
+			border-radius: 50%;
+			border: none;
+			margin: 20px;
+		}
+		#red {
+			background-color: red;
+		}
+		#yellow {
+			background-color: yellow;
+		}
+		#green {
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<h1>FSM Traffic Light</h1>
+	<div>
+		<button id="red">Red</button>
+		<button id="yellow">Yellow</button>
+		<button id="green">Green</button>
+	</div>
+	<script>
+		// Define the states and transitions
+		const states = [
+			{ name: 'red', duration: 20000, next: 'green' },
+			{ name: 'green', duration: 15000, next: 'yellow' },
+			{ name: 'yellow', duration: 5000, next: 'red' }
+		];
+
+		// Initialize the state machine
+		let currentState = states[0];
+		let timeoutId = setTimeout(transition, currentState.duration);
+		document.getElementById(currentState.name).style.backgroundColor = currentState.name;
+
+		// Add click event listeners to the buttons
+		document.getElementById('red').addEventListener('click', () => {
+			currentState = states.find(s => s.name === 'red');
+			clearTimeout(timeoutId);
+			transition();
+		});
+		document.getElementById('yellow').addEventListener('click', () => {
+			currentState = states.find(s => s.name === 'yellow');
+			clearTimeout(timeoutId);
+			transition();
+		});
+		document.getElementById('green').addEventListener('click', () => {
+			currentState = states.find(s => s.name === 'green');
+			clearTimeout(timeoutId);
+			transition();
+		});
+
+		// Define the transition function
+		function transition() {
+			document.getElementById(currentState.name).style.backgroundColor = 'black';
+			currentState = states.find(s => s.name === currentState.next);
+			document.getElementById(currentState.name).style.backgroundColor = currentState.name;
+			timeoutId = setTimeout(transition, currentState.duration);
+		}
+	</script>
+</body>
+</html>
